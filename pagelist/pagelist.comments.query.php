@@ -7,6 +7,8 @@ Hooks=pagelist.query
 
 defined('COT_CODE') or die('Wrong URL');
 
+global $cfg;
+
 if ($cfg['plugin']['pagelist']['comments'] && cot_plugin_active('comments'))
 {
 	global $db_com;

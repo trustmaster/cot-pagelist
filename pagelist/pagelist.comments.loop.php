@@ -7,6 +7,8 @@ Hooks=pagelist.loop
 
 defined('COT_CODE') or die('Wrong URL');
 
+global $cfg;
+
 if ($cfg['plugin']['pagelist']['comments'] && cot_plugin_active('comments'))
 {
 	$rowe_urlp = empty($row['page_alias']) ? array('c' => $row['page_cat'], 'id' => $row['page_id']) : array('c' => $row['page_cat'], 'al' => $row['page_alias']);

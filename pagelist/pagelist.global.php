@@ -25,7 +25,7 @@ require_once cot_incfile('page', 'module');
  */
 function pagelist($tpl = 'pagelist', $items = 0, $order = '', $condition = '', $cat = '', $blacklist = '', $whitelist = '', $sub = true, $pagination = 'pld', $noself = false)
 {
-	global $db, $db_pages, $env, $structure;
+	global $db, $db_pages, $db_users, $env, $structure;
 
 	// Compile lists
 	if (!empty($blacklist))
@@ -112,21 +112,25 @@ function pagelist($tpl = 'pagelist', $items = 0, $order = '', $condition = '', $
 	$sql_order = empty($order) ? '' : "ORDER BY $order";
 	$sql_limit = ($items > 0) ? "LIMIT $d, $items" : '';
 
-	$res = $db->query("SELECT p.* $cns_join_columns
-		FROM $db_pages AS p $cns_join_tables
+	$res = $db->query("SELECT p.*, u.* $cns_join_columns
+		FROM $db_pages AS p
+			LEFT JOIN $db_users AS u ON p.page_ownerid = u.user_id
+			$cns_join_tables
 		WHERE page_state='0' $where_cat $where_condition
 		$sql_order $sql_limit");
 
 	$jj = 1;
 	while ($row = $res->fetch())
 	{
-		$t->assign(cot_generate_pagetags($row, "PAGE_ROW_"));
+		$t->assign(cot_generate_pagetags($row, 'PAGE_ROW_'));
 
 		$t->assign(array(
 			'PAGE_ROW_NUM'     => $jj,
 			'PAGE_ROW_ODDEVEN' => cot_build_oddeven($jj),
 			'PAGE_ROW_RAW'     => $row
 		));
+
+		$t->assign(cot_generate_usertags($row, 'PAGE_ROW_OWNER_'));
 
 		/* === Hook === */
 		foreach (cot_getextplugins('pagelist.loop') as $pl)
@@ -180,3 +184,5 @@ function pagelist($tpl = 'pagelist', $items = 0, $order = '', $condition = '', $
 	$t->parse();
 	return $t->text();
 }
+
+?>
