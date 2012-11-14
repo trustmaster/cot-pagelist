@@ -17,7 +17,7 @@ require_once cot_incfile('page', 'module');
  * @param  string  $condition  Custom selection filter (SQL)
  * @param  string  $cat        Custom parent category code
  * @param  string  $blacklist  Category black list, semicolon separated
- * @param  string  $whitelist  Category white list, simicolon separated
+ * @param  string  $whitelist  Category white list, semicolon separated
  * @param  boolean $sub        Include subcategories TRUE/FALSE
  * @param  string  $pagination Pagination parameter name for the URL, e.g. 'pld'. Make sure it does not conflict with other paginations.
  * @param  boolean $noself     Exclude the current page from the rowset for pages.
