@@ -25,7 +25,7 @@ require_once cot_incfile('page', 'module');
  */
 function pagelist($tpl = 'pagelist', $items = 0, $order = '', $condition = '', $cat = '', $blacklist = '', $whitelist = '', $sub = true, $pagination = 'pld', $noself = false)
 {
-	global $db, $db_pages, $db_users, $env, $structure;
+	global $db, $db_pages, $db_users, $env, $structure, $cot_extrafields;
 
 	// Compile lists
 	if (!empty($blacklist))
